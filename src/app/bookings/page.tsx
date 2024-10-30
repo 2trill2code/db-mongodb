@@ -1,30 +1,54 @@
 "use client";
 
+import { useState } from "react";
+
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-// import { useState } from "react";
+import DatePicker from "@/components/DatePicker";
+
+type BookingQuery = {
+  name: string;
+  email: string;
+  mobile: string;
+  postalAddress: string;
+  residentialAddress: string;
+  checkInDate: Date | undefined;
+  checkOutDate: Date | undefined;
+};
 
 export default function Home() {
-  // const [query, setQuery] = useState({
-  //   location: "",
-  //   type: "",
-  //   bedrooms: "",
-  // });
+  const [query, setQuery] = useState<BookingQuery>({
+    name: "",
+    email: "",
+    mobile: "",
+    postalAddress: "",
+    residentialAddress: "",
+    checkInDate: new Date(),
+    checkOutDate: undefined,
+  });
 
   return (
     <main className="container flex flex-col items-center gap-7 py-5">
       <section className="p-7 w-2/4 bg-secondary-200 rounded-xl shadow-md">
         <h2 className="mb-2 text-2xl font-semibold">Booking Details</h2>
         <form action="">
-          {/* fix need 50% later */}
           <div className="flex gap-5">
-            <div>
+            <div className="mb-5">
               <label
                 htmlFor="checkIn"
                 className="block mb-2 font-medium text-lg"
               >
                 Check in date
               </label>
+              <DatePicker
+                date={query.checkInDate}
+                selected={query.checkInDate}
+                onSelect={(date) => {
+                  setQuery({ ...query, checkInDate: date });
+                }}
+                mode="single"
+                initialFocus
+              />
             </div>
             <div>
               <label
@@ -33,6 +57,15 @@ export default function Home() {
               >
                 Check out date
               </label>
+              <DatePicker
+                date={query.checkOutDate}
+                selected={query.checkOutDate}
+                onSelect={(date) => {
+                  setQuery({ ...query, checkOutDate: date });
+                }}
+                mode="single"
+                initialFocus
+              />
             </div>
           </div>
 
@@ -42,9 +75,9 @@ export default function Home() {
             </label>
             <Input
               id="name"
-              // onChange={(e) => {
-              //   setQuery({ ...query, location: e.target.value });
-              // }}
+              onChange={(e) => {
+                setQuery({ ...query, name: e.target.value });
+              }}
               className="mb-4"
               placeholder="Enter your name"
             />
@@ -55,9 +88,9 @@ export default function Home() {
             </label>
             <Input
               id="email"
-              // onChange={(e) => {
-              //   setQuery({ ...query, location: e.target.value });
-              // }}
+              onChange={(e) => {
+                setQuery({ ...query, email: e.target.value });
+              }}
               className="mb-4"
               placeholder="Enter your email"
             />
@@ -68,9 +101,9 @@ export default function Home() {
             </label>
             <Input
               id="mobile"
-              // onChange={(e) => {
-              //   setQuery({ ...query, location: e.target.value });
-              // }}
+              onChange={(e) => {
+                setQuery({ ...query, mobile: e.target.value });
+              }}
               className="mb-4"
               placeholder="Enter your mobile number"
             />
@@ -84,9 +117,9 @@ export default function Home() {
             </label>
             <Input
               id="postalAddress"
-              // onChange={(e) => {
-              //   setQuery({ ...query, location: e.target.value });
-              // }}
+              onChange={(e) => {
+                setQuery({ ...query, postalAddress: e.target.value });
+              }}
               className="mb-4"
               placeholder="Enter your postal address"
             />
@@ -100,9 +133,9 @@ export default function Home() {
             </label>
             <Input
               id="residentialAddress"
-              // onChange={(e) => {
-              //   setQuery({ ...query, location: e.target.value });
-              // }}
+              onChange={(e) => {
+                setQuery({ ...query, residentialAddress: e.target.value });
+              }}
               className="mb-4"
               placeholder="Enter your residential address"
             />
