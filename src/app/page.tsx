@@ -12,11 +12,17 @@ import {
 } from "@/components/ui/select";
 import { useState } from "react";
 
+type BookingQuery = {
+  location: string;
+  type: string | undefined;
+  bedrooms: string | undefined;
+};
+
 export default function Home() {
-  const [query, setQuery] = useState({
+  const [query, setQuery] = useState<BookingQuery>({
     location: "",
-    type: "",
-    bedrooms: "",
+    type: undefined,
+    bedrooms: undefined,
   });
 
   // querying the database
@@ -113,7 +119,8 @@ export default function Home() {
         {results.length === 0 ? (
           <h2 className="text-center">
             No results found for a {query.bedrooms || "n"} bedroom{" "}
-            {query.type || "property"} in {query.location || "unknown"}.
+            {query.type?.toLowerCase() || "property"} in{" "}
+            {query.location || "unknown"}.
           </h2>
         ) : (
           results.map((result: string) => <p key={result}>{result}</p>)
