@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectTrigger,
+  SelectValue,
   SelectContent,
   SelectGroup,
   SelectItem,
@@ -12,11 +13,11 @@ import {
 import { useState } from "react";
 
 export default function Home() {
-  // const [query, setQuery] = useState({
-  //   location: "",
-  //   type: null,
-  //   bedrooms: null,
-  // });
+  const [query, setQuery] = useState({
+    location: "",
+    type: "",
+    bedrooms: "",
+  });
 
   // querying the database
   const minBedrooms = 6;
@@ -38,8 +39,8 @@ export default function Home() {
             </label>
             <Input
               id="location"
-              onChange={() => {
-                console.log("damn peggy");
+              onChange={(e) => {
+                setQuery({ ...query, location: e.target.value });
               }}
               className="mb-4"
               placeholder="Enter a location"
@@ -49,9 +50,13 @@ export default function Home() {
             <label htmlFor="type" className="block mb-2 font-medium text-lg">
               Property type
             </label>
-            <Select>
+            <Select
+              onValueChange={(i) => {
+                setQuery({ ...query, type: i });
+              }}
+            >
               <SelectTrigger className="mb-4">
-                Choose Property Type
+                <SelectValue placeholder="Select a property type" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
@@ -71,9 +76,13 @@ export default function Home() {
             >
               Bedrooms
             </label>
-            <Select>
+            <Select
+              onValueChange={(i) => {
+                setQuery({ ...query, bedrooms: i });
+              }}
+            >
               <SelectTrigger className="mb-4">
-                Choose number of bedrooms
+                <SelectValue placeholder="Choose number of bedrooms" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
@@ -103,8 +112,8 @@ export default function Home() {
       <section className="p-7 w-2/4 bg-secondary-100 rounded-xl shadow-md">
         {results.length === 0 ? (
           <h2 className="text-center">
-            No results found a {query.bedrooms} bedroom {query.type} in
-            {query.location}.
+            No results found for a {query.bedrooms || "n"} bedroom{" "}
+            {query.type || "property"} in {query.location || "unknown"}.
           </h2>
         ) : (
           results.map((result: string) => <p key={result}>{result}</p>)
