@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import React from "react";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -16,7 +17,11 @@ type BookingQuery = {
   checkOutDate: Date | undefined;
 };
 
-export default function Home() {
+export default function PropertyBooking({
+  params,
+}: {
+  params: { id: string };
+}) {
   const [query, setQuery] = useState<BookingQuery>({
     name: "",
     email: "",
@@ -29,8 +34,10 @@ export default function Home() {
 
   return (
     <main className="container flex flex-col items-center gap-7 py-5">
+      <div>{params.id}</div>
       <section className="p-7 w-2/4 bg-secondary-200 rounded-xl shadow-md">
         <h2 className="mb-2 text-2xl font-semibold">Booking Details</h2>
+
         <form action="">
           <div className="flex gap-5">
             <div className="mb-5">

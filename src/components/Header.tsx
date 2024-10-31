@@ -10,9 +10,9 @@ export default function Header() {
         <Link href="/" className="hover:underline">
           Home
         </Link>
-        <Link href="/bookings" className="hover:underline">
-          Bookings
-        </Link>
+        {/* <Link href="/booking" className="hover:underline">
+          Booking
+        </Link> */}
       </div>
     </header>
   );
