@@ -14,15 +14,6 @@ AirBnB database web application interface.
 ## Stuff
 
 homepaged
-form
-location
-text
-required
-type property
-dropdown
-num bedrooms
-dropdown
-random properties or properties based on form
 location
 [if added] type property
 [if added] num bedrooms
