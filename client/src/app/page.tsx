@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,6 +11,7 @@ import {
   SelectGroup,
   SelectItem,
 } from "@/components/ui/select";
+import baseURL from "@/service/config";
 import { BookingQuery } from "@/lib/types";
 
 export default function Home() {
@@ -20,11 +21,37 @@ export default function Home() {
     bedrooms: undefined,
   });
 
-  // querying the database
-  const minBedrooms = 6;
-  const maxBedrooms = 10;
-  const propertyTypes = ["House", "Apartment", "Condo", "Mansion"];
+  const [fields, setFields] = useState({
+    minBedrooms: 0,
+    maxBedrooms: 0,
+    propertyTypes: [],
+  });
+
   const results: string[] = [];
+
+  useEffect(() => {
+    async function getbedrooms() {
+      const response = await fetch(`${baseURL}/listings/bedrooms`);
+      const data = await response.json();
+      setFields((prevFields) => ({
+        ...prevFields,
+        minBedrooms: data.min,
+        maxBedrooms: data.max,
+      }));
+    }
+
+    async function getproperties() {
+      const response = await fetch(`${baseURL}/listings/types`);
+      const data = await response.json();
+      setFields((prevFields) => ({
+        ...prevFields,
+        propertyTypes: data.propertyTypes,
+      }));
+    }
+
+    getbedrooms();
+    getproperties();
+  }, []);
 
   return (
     <main className="container flex flex-col items-center gap-7 py-5">
@@ -61,7 +88,7 @@ export default function Home() {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  {propertyTypes.map((type) => (
+                  {fields.propertyTypes.map((type) => (
                     <SelectItem key={type} value={type}>
                       {type}
                     </SelectItem>
@@ -88,16 +115,16 @@ export default function Home() {
               <SelectContent>
                 <SelectGroup>
                   {/* min - max */}
-                  {Array.from({ length: maxBedrooms - minBedrooms + 1 }).map(
-                    (_, index) => (
-                      <SelectItem
-                        key={index + minBedrooms}
-                        value={(index + minBedrooms).toString()}
-                      >
-                        {index + minBedrooms}
-                      </SelectItem>
-                    )
-                  )}
+                  {Array.from({
+                    length: fields.maxBedrooms - fields.minBedrooms + 1,
+                  }).map((_, index) => (
+                    <SelectItem
+                      key={index + fields.minBedrooms}
+                      value={(index + fields.minBedrooms).toString()}
+                    >
+                      {index + fields.minBedrooms}
+                    </SelectItem>
+                  ))}
                 </SelectGroup>
               </SelectContent>
             </Select>
