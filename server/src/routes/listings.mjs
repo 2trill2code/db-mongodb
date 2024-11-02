@@ -48,7 +48,7 @@ router.get("/all", async (req, res) => {
 router.get("/", async (req, res) => {
   const collection = await db.collection("listingsAndReviews");
   const query = {
-    address: {
+    "address.market": {
       $regex: req.query.location,
       $options: "i",
     },
@@ -58,14 +58,13 @@ router.get("/", async (req, res) => {
 
   const results = await collection.find(query).toArray();
   res.json(results);
-  res.send("success");
 });
 
 // get listing by id
-router.get("/:id", (req, res) => {
+router.get("/:id", async (req, res) => {
   const collection = db.collection("listingsAndReviews");
   const query = { _id: req.params.id };
-  const result = collection.findOne(query);
+  const result = await collection.findOne(query);
   res.json(result);
 });
 
