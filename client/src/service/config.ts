@@ -1,4 +1,2 @@
-import dotenv from "dotenv";
-dotenv.config({ path: "../.env" });
-
-export default `http://localhost:${process.env.PORT}`;
+const baseURL = `http://localhost:${3001}`;
+export default baseURL;

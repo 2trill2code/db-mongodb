@@ -17,6 +17,8 @@ PASSWORD=[password]
 PORT=[port]
 ```
 
+If add `PORT` edit `client/src/service/config.ts`.
+
 3. `cd server/ && npm i`
 4. `npm run dev`
 5. Run new instance of shell, `cd ../client/ && npm i`
