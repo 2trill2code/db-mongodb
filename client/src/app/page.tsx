@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,13 +11,7 @@ import {
   SelectGroup,
   SelectItem,
 } from "@/components/ui/select";
-import { useState } from "react";
-
-type BookingQuery = {
-  location: string;
-  type: string | undefined;
-  bedrooms: string | undefined;
-};
+import { BookingQuery } from "@/lib/types";
 
 export default function Home() {
   const [query, setQuery] = useState<BookingQuery>({

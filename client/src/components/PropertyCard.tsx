@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { PropertyListings } from "@/lib/type";
+import { PropertyListings } from "@/lib/types";
 
 export default function PropertyCard(property: PropertyListings) {
   return (

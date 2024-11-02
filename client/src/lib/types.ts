@@ -5,3 +5,9 @@ export type PropertyListings = {
   dailyPrice: number | undefined;
   reviewScore: number | undefined;
 };
+
+export type BookingQuery = {
+  location: string;
+  type: string | undefined;
+  bedrooms: string | undefined;
+};
