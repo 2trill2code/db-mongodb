@@ -15,6 +15,6 @@ export function validateFields(query: BookingQuery): ValidationResult {
 
   return {
     isValid: true,
-    errors: undefined,
+    errors: [],
   };
 }
