@@ -12,8 +12,9 @@ Prerequistes: Node.js v22
 2. Edit `server/.env`
 
 ```.env
-MONGO_URI=
-PORT=
+USERNAME=[username]
+PASSWORD=[password]
+PORT=[port]
 ```
 
 3. `cd server/ && npm i`
