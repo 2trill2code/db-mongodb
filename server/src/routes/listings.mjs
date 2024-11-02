@@ -20,14 +20,19 @@ router.get("/bedrooms", async (req, res) => {
       },
     ])
     .toArray();
-  res.send(results);
+  res.json({
+    min: results[0].minBedrooms,
+    max: results[0].maxBedrooms,
+  });
 });
 
 // get all property types
 router.get("/types", async (req, res) => {
   const collection = await db.collection("listingsAndReviews");
   const results = await collection.distinct("property_type");
-  res.send(results);
+  res.json({
+    propertyTypes: results,
+  });
 });
 
 // get all listings
@@ -35,7 +40,7 @@ router.get("/types", async (req, res) => {
 router.get("/all", async (req, res) => {
   const collection = await db.collection("listingsAndReviews");
   const results = await collection.find().toArray();
-  res.send(results);
+  res.json(results);
 });
 
 // get listings by {location, type, bedrooms}
@@ -50,7 +55,7 @@ router.get("/:location/:type/:bedrooms", async (req, res) => {
     bedrooms: parseInt(req.params.bedrooms),
   };
   const results = await collection.find(query).toArray();
-  res.send(results);
+  res.json(results);
 });
 
 // get listing by id
@@ -58,7 +63,7 @@ router.get("/:id", (req, res) => {
   const collection = db.collection("listingsAndReviews");
   const query = { _id: req.params.id };
   const result = collection.findOne(query);
-  res.send(result);
+  res.json(result);
 });
 
 // PUT
