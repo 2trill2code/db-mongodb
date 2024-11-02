@@ -24,16 +24,42 @@ router.get("/bedrooms", async (req, res) => {
 });
 
 // get all property types
-router.get("/types", (req, res) => {});
+router.get("/types", async (req, res) => {
+  const collection = await db.collection("listingsAndReviews");
+  const results = await collection.distinct("property_type");
+  res.send(results);
+});
 
 // get all listings
-router.get("/all", (req, res) => {});
+// NEED TO FIX FOR PAGINATION
+router.get("/all", async (req, res) => {
+  const collection = await db.collection("listingsAndReviews");
+  const results = await collection.find().toArray();
+  res.send(results);
+});
 
 // get listings by {location, type, bedrooms}
-router.get("/:location/:type/:bedrooms", (req, res) => {});
+router.get("/:location/:type/:bedrooms", async (req, res) => {
+  const collection = await db.collection("listingsAndReviews");
+  const query = {
+    address: {
+      $regex: req.params.location,
+      $options: "i",
+    },
+    property_type: req.params.type,
+    bedrooms: parseInt(req.params.bedrooms),
+  };
+  const results = await collection.find(query).toArray();
+  res.send(results);
+});
 
 // get listing by id
-router.get("/:id", (req, res) => {});
+router.get("/:id", (req, res) => {
+  const collection = db.collection("listingsAndReviews");
+  const query = { _id: req.params.id };
+  const result = collection.findOne(query);
+  res.send(result);
+});
 
 // PUT
 // add booking to listing by id
