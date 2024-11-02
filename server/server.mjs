@@ -1,7 +1,7 @@
 import express from "express";
 import listings from "./src/routes/listings.mjs";
 import dotenv from "dotenv";
-dotenv.config();
+dotenv.config({ path: "../.env" });
 
 const app = express();
 const PORT = process.env.PORT || 5000;

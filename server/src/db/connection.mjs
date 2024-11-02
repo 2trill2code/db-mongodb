@@ -1,6 +1,6 @@
 import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
-dotenv.config();
+dotenv.config({ path: "../.env" });
 
 const uri = `mongodb+srv://${process.env.USERNAME}:${process.env.PASSWORD}@cluster0.xcm0f.mongodb.net/`;
 

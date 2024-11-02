@@ -8,8 +8,8 @@ AirBnB database web application interface. Allowing for querying of listings and
 
 Prerequistes: Node.js v22
 
-1. Make `.env` file, `touch server/.env`
-2. Edit `server/.env`
+1. Make `.env` file, `touch .env`
+2. Edit `.env`
 
 ```.env
 USERNAME=[username]
