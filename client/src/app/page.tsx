@@ -60,7 +60,7 @@ export default function Home() {
       </section>
 
       <section className="p-7 w-2/4 bg-secondary-100 rounded-xl shadow-md">
-        <ListingsResults query={query} results={results} />
+        <ListingsResults results={results} />
       </section>
     </main>
   );
