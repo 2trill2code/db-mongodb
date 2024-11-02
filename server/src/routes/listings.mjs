@@ -44,18 +44,21 @@ router.get("/all", async (req, res) => {
 });
 
 // get listings by {location, type, bedrooms}
-router.get("/:location/:type/:bedrooms", async (req, res) => {
+// /listings?location=[string]&type=[string]&bedrooms=[int]
+router.get("/", async (req, res) => {
   const collection = await db.collection("listingsAndReviews");
   const query = {
     address: {
-      $regex: req.params.location,
+      $regex: req.query.location,
       $options: "i",
     },
-    property_type: req.params.type,
-    bedrooms: parseInt(req.params.bedrooms),
   };
+  if (req.query.type) query.property_type = req.query.type;
+  if (req.query.bedrooms) query.bedrooms = req.query.bedrooms;
+
   const results = await collection.find(query).toArray();
   res.json(results);
+  res.send("success");
 });
 
 // get listing by id
