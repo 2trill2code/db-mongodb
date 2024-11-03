@@ -3,14 +3,14 @@
 import { useEffect, useState } from "react";
 
 import baseURL from "@/service/config";
-import { BookingQuery, PropertyListings } from "@/lib/types";
+import { SearchQuery, PropertyListings } from "@/lib/types";
 import ListingsForm, {
   ListingFieldProps,
 } from "@/components/home/ListingsForm";
 import ListingsResults from "@/components/home/ListingsResults";
 
 export default function Home() {
-  const [query, setQuery] = useState<BookingQuery>({
+  const [query, setQuery] = useState<SearchQuery>({
     location: "",
     type: undefined,
     bedrooms: undefined,

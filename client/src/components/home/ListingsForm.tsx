@@ -15,7 +15,7 @@ import {
 
 import { validateFields } from "@/lib/validation";
 import baseURL from "@/service/config";
-import { BookingQuery, PropertyListings } from "@/lib/types";
+import { SearchQuery, PropertyListings } from "@/lib/types";
 
 export type ListingFieldProps = {
   minBedrooms: number;
@@ -24,8 +24,8 @@ export type ListingFieldProps = {
 };
 
 type ListingsFormProps = {
-  query: BookingQuery;
-  setQuery: (query: BookingQuery) => void;
+  query: SearchQuery;
+  setQuery: (query: SearchQuery) => void;
   fields: ListingFieldProps;
   setResults: (results: PropertyListings[]) => void;
 };

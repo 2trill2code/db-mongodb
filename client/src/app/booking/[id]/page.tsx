@@ -1,20 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import DatePicker from "@/components/DatePicker";
 
-type BookingQuery = {
-  name: string;
-  email: string;
-  mobile: string;
-  postalAddress: string;
-  residentialAddress: string;
-  checkInDate: Date | undefined;
-  checkOutDate: Date | undefined;
-};
+import { PropertyListings } from "@/lib/types";
+import baseURL from "@/service/config";
+import { BookingQuery } from "@/lib/types";
 
 export default function PropertyBooking({
   params,
@@ -30,14 +24,37 @@ export default function PropertyBooking({
     checkInDate: new Date(),
     checkOutDate: undefined,
   });
+  const listingId = params.id;
+  const [listing, setListing] = useState<PropertyListings | undefined>(
+    undefined
+  );
+
+  useEffect(() => {
+    async function fetchListing() {
+      const res = await fetch(`${baseURL}/listings/${listingId}`);
+      const data = await res.json();
+      setListing(() => data);
+    }
+
+    fetchListing();
+  }, [listingId]);
+
+  async function bookProperty() {}
 
   return (
     <main className="container flex flex-col items-center gap-7 py-5">
-      <div>{params.id}</div>
       <section className="p-7 w-2/4 bg-secondary-200 rounded-xl shadow-md">
         <h2 className="mb-2 text-2xl font-semibold">Booking Details</h2>
+        <p>Listing Id: {listingId}</p>
 
-        <form action="">
+        <p>Name: {listing?.name || "unknown"}</p>
+
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            console.log(query);
+          }}
+        >
           <div className="flex gap-5">
             <div className="mb-5">
               <label

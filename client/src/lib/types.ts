@@ -1,3 +1,19 @@
+export type SearchQuery = {
+  location: string;
+  type: string | undefined;
+  bedrooms: string | undefined;
+};
+
+export type BookingQuery = {
+  name: string;
+  email: string;
+  mobile: string;
+  postalAddress: string;
+  residentialAddress: string;
+  checkInDate: Date | undefined;
+  checkOutDate: Date | undefined;
+};
+
 export type PropertyListings = {
   _id: string;
   name: string | undefined;
@@ -5,9 +21,3 @@ export type PropertyListings = {
   dailyPrice: number | undefined;
   reviewScore: number | undefined;
 } & BookingQuery;
-
-export type BookingQuery = {
-  location: string;
-  type: string | undefined;
-  bedrooms: string | undefined;
-};
