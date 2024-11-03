@@ -10,6 +10,7 @@ import { PropertyListings } from "@/lib/types";
 import baseURL from "@/service/config";
 import { BookingQuery } from "@/lib/types";
 import { validateBookingFields } from "@/lib/validation";
+import { useRouter } from "next/navigation";
 
 export default function PropertyBooking({
   params,
@@ -30,6 +31,7 @@ export default function PropertyBooking({
   const [listing, setListing] = useState<PropertyListings | undefined>(
     undefined
   );
+  const router = useRouter();
 
   useEffect(() => {
     async function fetchListing() {
@@ -48,11 +50,19 @@ export default function PropertyBooking({
       return;
     }
 
-    const url = `${baseURL}/bookings`;
-    await fetch(url, {
-      method: "POST",
-      body: JSON.stringify({ ...query, listingId }),
+    // test { _id: "10047964" }
+    const url = `${baseURL}/listings/${listingId}/addBooking`;
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...query, listingId: listingId }),
     });
+    if (!response.ok) {
+      setErrors(["Failed to book property"]);
+      return;
+    } else router.push(`/confirmation?listingID=${listingId}`);
   }
 
   return (
