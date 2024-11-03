@@ -2,6 +2,7 @@
 
 import express from "express";
 import db from "../db/connection.mjs";
+import { ObjectId } from "mongodb";
 
 const router = express.Router();
 
@@ -54,7 +55,7 @@ router.get("/", async (req, res) => {
     },
   };
   if (req.query.type) query.property_type = req.query.type;
-  if (req.query.bedrooms) query.bedrooms = req.query.bedrooms;
+  if (req.query.bedrooms) query.bedrooms = parseInt(req.query.bedrooms);
 
   const results = await collection.find(query).toArray();
   const mappedResults = results.map((listing) => {
@@ -98,7 +99,21 @@ router.get("/:id", async (req, res) => {
 
 // PUT
 // add booking to listing by id
-router.put("/:id/addBooking", (req, res) => {});
+router.put("/:id/addBooking", async (req, res) => {
+  const collection = await db.collection("listingsAndReviews");
+  const listingId = req.params.id;
+  const booking = req.body;
+  booking.booking_id = new ObjectId();
+
+  const result = await collection.updateOne(
+    { _id: listingId },
+    { $push: { bookings: booking } }
+  );
+
+  if (result.modifiedCount === 1)
+    res.status(200).json({ message: "Booking added successfully." });
+  else res.status(404).json({ message: "Listing not found." });
+});
 
 // POST
 
