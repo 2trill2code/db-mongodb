@@ -27,11 +27,14 @@ If add `PORT` edit `client/src/service/config.ts`.
 ## Todo
 
 - fix json return for form
-- add icon to errors
--
+- random listings
+- seperate form
+- confirmation page (no validation)
+- add api endpoint for finding bookings
 
 Extra
 
 - pagination of listings
+- add icon to errors
 - show information of listing in booking/id
 - ListingResults
