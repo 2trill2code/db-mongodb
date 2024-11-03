@@ -20,4 +20,4 @@ export type PropertyListings = {
   summary: string | undefined;
   dailyPrice: number | undefined;
   reviewScore: number | undefined;
-} & BookingQuery;
+} & SearchQuery;
