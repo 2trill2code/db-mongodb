@@ -97,6 +97,26 @@ router.get("/:id", async (req, res) => {
   res.json(mappedResult);
 });
 
+router.get("/random/:num", async (req, res) => {
+  const collection = db.collection("listingsAndReviews");
+  const results = await collection
+    .aggregate([{ $sample: { size: parseInt(req.params.num) } }])
+    .toArray();
+  const mappedResults = results.map((listing) => {
+    return {
+      _id: listing._id,
+      name: listing.name,
+      summary: listing.summary,
+      dailyPrice: parseInt(listing.price.toString()),
+      reviewScore: listing.review_scores.review_scores_rating,
+      location: listing.address.market,
+      type: listing.property_type,
+      bedrooms: listing.bedrooms,
+    };
+  });
+  res.json(mappedResults);
+});
+
 // PUT
 // add booking to listing by id
 router.put("/:id/addBooking", async (req, res) => {

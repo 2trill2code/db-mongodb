@@ -44,8 +44,15 @@ export default function Home() {
       }));
     }
 
+    async function getRandomListings() {
+      const response = await fetch(`${baseURL}/listings/random/25`);
+      const data = await response.json();
+      setResults(data);
+    }
+
     getbedrooms();
     getproperties();
+    getRandomListings();
   }, []);
 
   return (
