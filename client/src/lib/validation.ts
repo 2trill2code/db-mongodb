@@ -30,6 +30,15 @@ export function validateBookingFields(query: BookingQuery): ValidationResult {
   if (!query.residentialAddress || !query.residentialAddress.trim())
     errors.push("Residential Address is required");
   if (!query.checkInDate) errors.push("Check in date is required");
+  if (!query.checkOutDate) errors.push("Check out date is required");
+  if (query.checkInDate && query.checkOutDate) {
+    const checkInDate = new Date(query.checkInDate);
+    const checkOutDate = new Date(query.checkOutDate);
+
+    if (checkInDate.getDate() > checkOutDate.getDate()) {
+      errors.push("Check out date must be after check in date");
+    }
+  }
 
   return {
     isValid: errors.length === 0,
