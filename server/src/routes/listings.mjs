@@ -57,7 +57,20 @@ router.get("/", async (req, res) => {
   if (req.query.bedrooms) query.bedrooms = req.query.bedrooms;
 
   const results = await collection.find(query).toArray();
-  res.json(results);
+  const mappedResults = results.map((listing) => {
+    return {
+      _id: listing._id,
+      name: listing.name,
+      summary: listing.summary,
+      dailyPrice: parseInt(listing.price.toString()),
+      reviewScore: listing.review_scores.review_scores_rating,
+      location: listing.address.market,
+      type: listing.property_type,
+      bedrooms: listing.bedrooms,
+    };
+  });
+
+  res.json(mappedResults);
 });
 
 // get listing by id
