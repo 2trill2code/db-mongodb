@@ -42,6 +42,7 @@ export default function ListingsForm({
     const result = validateFields(query);
     if (!result.isValid) {
       setErrors(result.errors);
+      setResults([]);
       return;
     }
 
@@ -51,7 +52,7 @@ export default function ListingsForm({
     console.log(url);
     const response = await fetch(url);
     const data = await response.json();
-    setResults(data);
+    setResults([...data]);
   }
 
   return (
