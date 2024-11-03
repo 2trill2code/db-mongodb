@@ -9,6 +9,7 @@ import DatePicker from "@/components/DatePicker";
 import { PropertyListings } from "@/lib/types";
 import baseURL from "@/service/config";
 import { BookingQuery } from "@/lib/types";
+import { validateBookingFields } from "@/lib/validation";
 
 export default function PropertyBooking({
   params,
@@ -24,6 +25,7 @@ export default function PropertyBooking({
     checkInDate: new Date(),
     checkOutDate: undefined,
   });
+  const [errors, setErrors] = useState<string[]>([]);
   const listingId = params.id;
   const [listing, setListing] = useState<PropertyListings | undefined>(
     undefined
@@ -39,7 +41,19 @@ export default function PropertyBooking({
     fetchListing();
   }, [listingId]);
 
-  async function bookProperty() {}
+  async function bookProperty() {
+    const result = validateBookingFields(query);
+    if (!result.isValid) {
+      setErrors(result.errors);
+      return;
+    }
+
+    const url = `${baseURL}/bookings`;
+    await fetch(url, {
+      method: "POST",
+      body: JSON.stringify({ ...query, listingId }),
+    });
+  }
 
   return (
     <main className="container flex flex-col items-center gap-7 py-5">
@@ -52,7 +66,7 @@ export default function PropertyBooking({
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            console.log(query);
+            bookProperty();
           }}
         >
           <div className="flex gap-5">
@@ -166,6 +180,15 @@ export default function PropertyBooking({
           <Button className="w-full font-medium text-md bg-primary-400">
             Search
           </Button>
+          <div>
+            {errors.length > 0 && (
+              <ul className="text-red-500">
+                {errors.map((error) => (
+                  <li key={error}>{error}</li>
+                ))}
+              </ul>
+            )}
+          </div>
         </form>
       </section>
     </main>
