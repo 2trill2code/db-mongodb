@@ -21,7 +21,7 @@ export default function ListingsResults({
         </h2>
       ) : (
         results.map((result) => (
-          <PropertyCard key={result.id} property={result} />
+          <PropertyCard key={result._id} property={result} />
         ))
       )}
     </>

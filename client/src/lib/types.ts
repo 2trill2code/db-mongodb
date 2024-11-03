@@ -1,10 +1,10 @@
 export type PropertyListings = {
-  id: string;
+  _id: string;
   name: string | undefined;
   summary: string | undefined;
   dailyPrice: number | undefined;
   reviewScore: number | undefined;
-};
+} & BookingQuery;
 
 export type BookingQuery = {
   location: string;
