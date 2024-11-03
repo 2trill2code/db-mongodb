@@ -78,6 +78,11 @@ router.get("/:id", async (req, res) => {
   const collection = db.collection("listingsAndReviews");
 
   const result = await collection.findOne({ _id: req.params.id });
+  if (!result) {
+    res.status(404).send("Listing not found");
+    return;
+  }
+
   const mappedResult = {
     _id: result._id,
     name: result.name,
