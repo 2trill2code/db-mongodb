@@ -176,7 +176,7 @@ export default function PropertyBooking({
               htmlFor="residentialAddress"
               className="block mb-2 font-medium text-lg"
             >
-              Postal Address
+              Residental Address
             </label>
             <Input
               id="residentialAddress"
