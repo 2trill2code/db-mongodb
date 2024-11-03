@@ -76,9 +76,19 @@ router.get("/", async (req, res) => {
 // get listing by id
 router.get("/:id", async (req, res) => {
   const collection = db.collection("listingsAndReviews");
-  const query = { _id: req.params.id };
-  const result = await collection.findOne(query);
-  res.json(result);
+
+  const result = await collection.findOne({ _id: req.params.id });
+  const mappedResult = {
+    _id: result._id,
+    name: result.name,
+    summary: result.summary,
+    dailyPrice: parseInt(result.price.toString()),
+    reviewScore: result.review_scores.review_scores_rating,
+    location: result.address.market,
+    type: result.property_type,
+    bedrooms: result.bedrooms,
+  };
+  res.json(mappedResult);
 });
 
 // PUT
